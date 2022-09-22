@@ -75,3 +75,82 @@ exports.setStoredProd = (req,res,next) =>{
   })    
 }
 }
+
+exports.getProdByID = async(req, res, next) =>{
+  const prodID = req.params.prodID
+
+  try {
+    const recProd = await genericQuery(`
+     SELECT PROD_COD, PROD_DESC, PROD_VALUE, PROD_IMGPATH
+     FROM TB_PRODS
+     WHERE PROD_COD = '${prodID}'
+    `)
+    
+    if(recProd.recordset.length == 0){
+      return res.status(404).send({
+        message: `Product code ${prodID} not exists.`
+      })
+    }
+    const infoProd = recProd.recordset.map((prod) =>({
+      code: prod.PROD_COD,
+      description: prod.PROD_DESC,
+      value: prod.PROD_VALUE,
+      imgPath: prod.PROD_IMGPATH
+    }))
+    
+    return res.status(202).send({ message: `Product ${prodID} info`, infoProd: infoProd })
+
+  } catch (error) {
+    return res.status(500).send({
+      error: error.name,
+      message: 'Catch error on getProdWithID Contoller.'
+    })  
+  }
+}
+
+exports.storedProdUpdate = async(req,res,next) =>{
+  const oldCod = req.params.prodID
+  const newCod = req.body.code
+  const prodDesc = req.body.description
+  const prodValue = req.body.value
+  const prodImg = req.file.path
+  
+  try {
+    const recProd = await genericQuery(`SELECT * FROM TB_PRODS WHERE PROD_COD = '${newCod}'`)
+    
+    if(recProd >=1 && oldCod !== newCod){
+      return res.status(401).send({ error: `code ${newCod} already exists. `})
+    }else{
+      return res.status(202).send({
+        message: `${newCod} has updated. `,
+        prodInfo: {
+         code: newCod,
+         description: prodDesc,
+         value: prodValue,
+         imgPath: prodImg 
+        }
+      })
+    }
+
+  } catch (error) {
+    return res.status(500).send({
+        error: error.name,
+        message: 'Catch error on storedProdUpdate Contoller.'
+    })  
+  }
+}
+/* usually, I create a DELETED column and don't completely delete the data. */
+exports.deleteStoredProd = async(req,res,next) => {
+  const codProd = req.body.code
+
+  try {
+    await genericQuery(`DELETE * FROM TB_PRODS WHERE PROD_COD = '${codProd}'`)
+    return res.status(200).send({ message: `Product ${codProd} successfully removed.` })
+
+  } catch (error) {
+    return res.status(500).send({
+      error: error.name,
+      message: 'Catch error on storedProdUpdate Contoller.'
+  }) 
+  }
+}
