@@ -4,6 +4,7 @@ const app = express();
 const morgan = require('morgan');
 const { obrigatory } = require('./middlewares/login');
 const prodRoute = require('./routes/prod-store');
+const userRoute = require('./routes/users');
 
 app.use(morgan('dev'))
 app.use('/uploads', express.static('uploads'));

@@ -40,7 +40,7 @@ exports.setStoredProd = (req,res,next) =>{
         let duplicateProd = prodResp.recordset.length;
          
         if(firstQryErr){ 
-         return res.status(500).send({ message: 'Error to valitate product.' }) 
+         return res.status(500).send({ message: 'Error to validate product.' }) 
         }else if(duplicateProd >= 1){
          pool.close(); 
          return res.status(404).send({
