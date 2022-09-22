@@ -1,0 +1,32 @@
+{
+  "name": "node-express-api-boilerplate",
+  "version": "1.0.0",
+  "description": "Simple API Express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HickAndrade/Node-Express-API-Boilerplate.git"
+  },
+  "author": "Hick Andrade",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HickAndrade/Node-Express-API-Boilerplate/issues"
+  },
+  "homepage": "https://github.com/HickAndrade/Node-Express-API-Boilerplate#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "mssql": "^9.0.1",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
