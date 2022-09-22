@@ -27,6 +27,9 @@ const upload = multer({
     fileFilter: fileFilter
 })
 
-
+router.get('/', storageController.getAllStoredProds);
+router.post('/product', upload.single('prodIMG'), storageController.setStoredProd);
+router.patch('/product/:prodID', storageController.storedProdUpdate);
+router.get('/product/:prodID', storageController.getProdByID);
 
 module.exports = router;
