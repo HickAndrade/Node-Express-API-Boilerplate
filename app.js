@@ -2,6 +2,7 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+const prodStorage = require('./routes/prod-store');
 
 app.use(morgan('dev'))
 app.use('/uploads', express.static('uploads'));
@@ -18,6 +19,10 @@ app.use((req,res,next) => {
     }
     next();
 })
+
+/*app.use('/User/Login', userLogin);
+app.use('/User/Register', userRegister);*/
+app.use('/Products/Storage', prodStorage);
 
 app.use((req,res,next) =>{
     const customError = new Error('Request not Found.')
